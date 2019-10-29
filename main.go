@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/blocktop/mp-common/config"
 	"github.com/blocktop/mp-common/server"
 	"github.com/blocktop/mp-common/server/middleware"
+	"github.com/blocktop/mp-web-auth-server/config"
 	chim "github.com/go-chi/chi/middleware"
 	"github.com/stellar/go/support/http"
 	"os"
@@ -20,7 +20,7 @@ func main() {
 
 	setRoutes(r)
 
-	server.RunHTTPServer(r, "web auth server", cfg.WebAuthPort)
+	server.RunHTTPServer(r)
 
 	os.Exit(0)
 }

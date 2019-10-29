@@ -1,0 +1,25 @@
+export GO111MODULE = on
+
+SERVER_BIN := /go/bin/$(shell basename $(CURDIR))
+GO_FILES := $(shell find . ! -path './.git*' -type f -name '*.go')
+JSON_FILES := $(shell find . ! -path './.git*' -type f -name '*.json')
+
+.PHONY: build
+build: $(GO_FILES) $(JSON_FILES) ## Build server
+	@echo ""
+	@echo "Building..."
+	@go build -o $(SERVER_BIN)
+
+.PHONY: deps
+deps: go.mod go.sum ## Get dependencies
+	go mod download
+
+.PHONY: install
+install:
+	$(MAKE) build
+
+.PHONY: prepare
+prepare: deps ## Build the project and install deps
+
+clean:
+	rm -f $(GOPATH)/bin/web-auth-server

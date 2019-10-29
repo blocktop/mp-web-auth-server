@@ -4,8 +4,8 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"github.com/blocktop/mp-common/config"
 	"github.com/blocktop/mp-common/server"
+	"github.com/blocktop/mp-web-auth-server/config"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/stellar/go/txnbuild"
 	"net/http"
@@ -23,7 +23,7 @@ func handleGetToken(w http.ResponseWriter, r *http.Request) {
 
 	txn, err := txnbuild.BuildChallengeTx(cfg.SigningKeySeed, account, cfg.AnchorName, cfg.NetworkPassphrase, 5*time.Minute)
 	if err != nil {
-		server.ResponseError(w, http.StatusInternalServerError, server.CHLFAIL, err)
+		server.ResponseError(w, http.StatusInternalServerError, CHLFAIL, err)
 		return
 	}
 

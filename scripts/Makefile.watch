@@ -1,0 +1,23 @@
+# Depends on make build and SERVER_BIN
+PID := /tmp/$(SERVER_BIN).pid
+
+ifeq ($(shell uname),Linux)
+FSWATCH_OPTIONS := --event Created --event Updated --event Removed
+else
+FSWATCH_OPTIONS := -e '/[A-z]*$$'
+endif
+
+FSWATCH_CMD := fswatch -xr -e ./.git -e ./vendor -e 'packr\.go' -e $(SERVER_BIN) $(FSWATCH_OPTIONS) -o .
+
+.PHONY: serve
+serve: ## Start server
+	@IN_DEV=true make restart
+	@$(FSWATCH_CMD) | IN_DEV=true xargs -n1 -I{} make restart || make kill
+
+.PHONY: kill
+kill: ## Kill server
+	@kill `cat $(PID)` 2> /dev/null || true
+
+.PHONY: restart
+restart: kill build ## Restart server
+	@$(SERVER_BIN) & echo $$! > $(PID)
