@@ -1,4 +1,4 @@
-ARG SERVICE_NAME=web-auth-service
+ARG SERVICE_NAME=web-auth-server
 FROM blocktop/golang:build@sha256:52ad9d664c9bb3f0af24142b1ed6cf35f72de4beb0f3e88763958329ddb3f054 as build
 
 EXPOSE 3000

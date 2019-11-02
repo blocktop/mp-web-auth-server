@@ -22,4 +22,4 @@ install:
 prepare: deps ## Build the project and install deps
 
 clean:
-	rm -f $(GOPATH)/bin/web-auth-server
+	rm -f $(SERVER_BIN)
